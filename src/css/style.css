@@ -1,24 +1,12 @@
-body {
-    color: #999;
-}
-
-#game {
-    display: flex;
-    margin: auto;
-    width: 400px;
+#imdb-list {
+    width: 500px;
     height: 400px;
-    background-color: rgb(9, 92, 60);
-    flex-wrap: wrap;
+    font-size: 22px;
+    margin: auto;
 }
 
-.game-cell {
-    width: 98px;
-    height: 98px;
-    border: 1px solid white;
-}
-
-.picture {
-    background-image: url('../img/goblin.png');
-    background-repeat: no-repeat;
-    background-position: center;
+td {
+    border: 1px solid grey;
+    padding-left: 10px;
+    padding-right: 10px;
 }

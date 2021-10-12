@@ -1,39 +1,51 @@
+import imdb from './imdb.json';
+import getSortImdb from './sort';
+
 console.log('app started');
+console.log(getSortImdb(imdb));
 
-const gameField = document.getElementById('game');
-let randomNumber = null;
+const html = `
+<tr>
+  <td>id</td>
+  <td>title</td>
+  <td>year</td>
+  <td>imdb</td>
+</tr>
+`;
+const imdbList = document.getElementById('imdb-list');
 
-for (let i = 1; i < 17; i += 1) {
-  const cell = document.createElement('div');
-  cell.classList.add('game-cell');
-  gameField.appendChild(cell);
+imdbList.firstElementChild.innerHTML = html;
+
+const rowElement = imdbList.firstElementChild.firstElementChild;
+
+for (let i = 0; i < imdb.length; i += 1) {
+  const cloneTr = rowElement.cloneNode();
+  cloneTr.dataset.id = imdb[i].id;
+  cloneTr.dataset.title = imdb[i].title;
+  cloneTr.dataset.year = imdb[i].year;
+  cloneTr.dataset.imdb = `imdb: ${imdb[i].imdb.toFixed(2)}`;
+  cloneTr.classList.add('with-data');
+  imdbList.firstElementChild.appendChild(cloneTr);
 }
 
-const completeField = Array.from(document.querySelectorAll('.game-cell'));
+// console.log(rowElement.children);
+const arrowUp = '\u{1F815}';
+const arrowDown = '\u{1F817}';
+rowElement.children[0].textContent = `${rowElement.children[0].textContent} ${arrowUp}`;
 
-function getRandomPicture(field) {
-  field.forEach((elem) => {
-    if (elem.classList.contains('picture')) {
-      elem.classList.remove('picture');
-    }
-  });
+const list = Array.from(document.querySelectorAll('.with-data'));
 
-  let random = Math.floor(Math.random() * field.length);
-
-  if (randomNumber === random) {
-    while (randomNumber === random) {
-      random = Math.floor(Math.random() * field.length);
-    }
-    randomNumber = random;
-    return field[randomNumber].classList.add('picture');
-  }
-
-  randomNumber = random;
-  return field[randomNumber].classList.add('picture');
-}
-
-getRandomPicture(completeField);
-
-setInterval(() => {
-  getRandomPicture(completeField);
-}, 2000);
+list.forEach((elem) => {
+  const cloneTdId = rowElement.firstElementChild.cloneNode();
+  const cloneTdTitle = rowElement.firstElementChild.cloneNode();
+  const cloneTdYear = rowElement.firstElementChild.cloneNode();
+  const cloneTdImdb = rowElement.firstElementChild.cloneNode();
+  cloneTdId.textContent = elem.dataset.id;
+  elem.appendChild(cloneTdId);
+  cloneTdTitle.textContent = elem.dataset.title;
+  elem.appendChild(cloneTdTitle);
+  cloneTdYear.textContent = elem.dataset.year;
+  elem.appendChild(cloneTdYear);
+  cloneTdImdb.textContent = elem.dataset.imdb;
+  elem.appendChild(cloneTdImdb);
+});
