@@ -1,9 +1,10 @@
 import imdb from './imdb.json';
 import getSortImdb from './sort';
+import setInterval from './sort';
 
 console.log('app started');
 console.log(getSortImdb(imdb));
-
+setInterval();
 const html = `
 <tr>
   <td>id</td>
