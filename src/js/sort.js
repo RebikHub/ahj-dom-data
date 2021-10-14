@@ -1,11 +1,12 @@
 import imdb from './imdb.json';
+
 let count = 0;
-let col;
+let col = '';
 let arrow;
 const arrowUp = '\u{1F815}';
 const arrowDown = '\u{1F817}';
 
-function getSortImdb(imdb, col, arrow) {
+export default function getSortImdb(imdb, col, arrow) {
   if (count === 0) {
     col = 'id';
     arrow = arrowDown;
@@ -41,6 +42,10 @@ function getSortImdb(imdb, col, arrow) {
   } else {
     count = 0;
   }
+  console.log(count, col, arrow);
+}
+
+function sorting(col, arrow, imdb) {
   imdb.sort((a, b) => {
     if (a.col > b.col) {
       return -1;
@@ -53,6 +58,6 @@ function getSortImdb(imdb, col, arrow) {
   return imdb;
 }
 
-export default setInterval(() => {
-  getSortImdb(imdb, col, arrow);
-}, 2000);
+// setInterval(() => {
+//   console.log(getSortImdb(imdb, col, arrow));
+// }, 2000);
