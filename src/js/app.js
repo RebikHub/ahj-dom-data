@@ -134,4 +134,4 @@ function getSortImdb(listTr) {
 
 setInterval(() => {
   getSortImdb(list);
-}, 5000);
+}, 2000);
