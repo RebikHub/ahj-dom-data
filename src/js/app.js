@@ -1,9 +1,7 @@
 import imdb from './imdb.json';
-// import getSortImdb from './sort';
-// import setInterval from './sort';
 
 console.log('app started');
-// setInterval();
+
 let count = 0;
 const arrowUp = '\u{1F815}';
 const arrowDown = '\u{1F817}';
@@ -48,82 +46,92 @@ list.forEach((elem) => {
   elem.appendChild(cloneTdImdb);
 });
 
-console.log(list);
-
-function sorting(col, arrow, imdb) {
-  console.log(col);
-  if (col === 'id' && arrow === arrowUp) {
-    rowElement.children[0].textContent = `${rowElement.children[0].textContent} ${arrow}`;
-  } else if (col === 'title') {
-    rowElement.children[0].textContent = `${rowElement.children[0].textContent} ${arrow}`;
-  } else if (col === 'year') {
-    rowElement.children[0].textContent = `${rowElement.children[0].textContent} ${arrow}`;
-  } else if (col === 'imdb') {
-    rowElement.children[0].textContent = `${rowElement.children[0].textContent} ${arrow}`;
-  }
-
-  imdb.sort((a, b) => {
-    if (a.dataset[col] > b.dataset[col]) {
-      return -1;
-    }
-    if (a.dataset[col] < b.dataset[col]) {
-      return 1;
-    }
-    return 0;
-  });
-}
-
-function getSortImdb(imdb) {
+function getSortImdb(listTr) {
+  const tbody = document.querySelector('tbody');
+  let listId = null;
   if (count === 0) {
-    sorting('id', arrowDown, imdb);
+    rowElement.children[0].textContent = `${rowElement.children[0].textContent} ${arrowDown}`;
+    listId = listTr.sort((a, b) => a.dataset.id - b.dataset.id);
     count += 1;
   } else if (count === 1) {
-    sorting('id', arrowUp, imdb);
+    rowElement.children[0].textContent = 'id';
+    rowElement.children[0].textContent = `${rowElement.children[0].textContent} ${arrowUp}`;
+    listId = listTr.sort((a, b) => b.dataset.id - a.dataset.id);
     count += 1;
   } else if (count === 2) {
-    sorting('title', arrowDown, imdb);
+    rowElement.children[0].textContent = 'id';
+    rowElement.children[1].textContent = `title ${arrowDown}`;
+    listId = listTr.sort((a, b) => {
+      if (a.dataset.title < b.dataset.title) {
+        return -1;
+      }
+      if (a.dataset.title > b.dataset.title) {
+        return 1;
+      }
+      return 0;
+    });
     count += 1;
   } else if (count === 3) {
-    sorting('title', arrowUp, imdb);
+    rowElement.children[1].textContent = 'title';
+    rowElement.children[1].textContent = `title ${arrowUp}`;
+    listId = listTr.sort((a, b) => {
+      if (a.dataset.title < b.dataset.title) {
+        return 1;
+      }
+      if (a.dataset.title > b.dataset.title) {
+        return -1;
+      }
+      return 0;
+    });
     count += 1;
   } else if (count === 4) {
-    sorting('year', arrowDown, imdb);
+    rowElement.children[1].textContent = 'title';
+    rowElement.children[2].textContent = `year ${arrowDown}`;
+    listId = listTr.sort((a, b) => a.dataset.year - b.dataset.year);
     count += 1;
   } else if (count === 5) {
-    sorting('year', arrowUp, imdb);
+    rowElement.children[2].textContent = 'year';
+    rowElement.children[2].textContent = `year ${arrowUp}`;
+    listId = listTr.sort((a, b) => b.dataset.year - a.dataset.year);
     count += 1;
   } else if (count === 6) {
-    sorting('imdb', arrowDown, imdb);
+    rowElement.children[2].textContent = 'year';
+    rowElement.children[3].textContent = `imdb ${arrowDown}`;
+    listId = listTr.sort((a, b) => {
+      if (a.dataset.imdb < b.dataset.imdb) {
+        return -1;
+      }
+      if (a.dataset.imdb > b.dataset.imdb) {
+        return 1;
+      }
+      return 0;
+    });
     count += 1;
   } else if (count === 7) {
-    sorting('imdb', arrowUp, imdb);
+    rowElement.children[3].textContent = 'imdb';
+    rowElement.children[3].textContent = `imdb ${arrowUp}`;
+    listId = listTr.sort((a, b) => {
+      if (a.dataset.imdb < b.dataset.imdb) {
+        return 1;
+      }
+      if (a.dataset.imdb > b.dataset.imdb) {
+        return -1;
+      }
+      return 0;
+    });
     count += 1;
   } else {
+    rowElement.children[3].textContent = 'imdb';
     count = 0;
   }
-  console.log(imdb[0].dataset['id']);
-  console.log(count);
+  for (let i = 0; i < listId.length; i += 1) {
+    tbody.removeChild(tbody.lastElementChild);
+  }
+  for (let i = 0; i < listId.length; i += 1) {
+    tbody.appendChild(listId[i]);
+  }
 }
 
-// getSortImdb(list);
-
-let listId = list.sort((a, b) => {
-  Number(a.dataset['id'])
-  Number(b.dataset['id'])
-  console.log(typeof a.dataset['id']);
-  console.log(typeof b.dataset['id']);
-  if (a.dataset['id'] > b.dataset['id']) {
-    return 1;
-  }
-  if (a.dataset['id'] < b.dataset['id']) {
-    return -1;
-  }
-  return 0;
-});
-const tbody = document.querySelector('tbody');
-// list.forEach((elem) => {
-//   elem.removeChild()
-// })
-console.log(tbody);
-console.log(list, listId);
-// tbody.replaceChild(...list, ...listId);
+setInterval(() => {
+  getSortImdb(list);
+}, 5000);
