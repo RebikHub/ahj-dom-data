@@ -50,12 +50,12 @@ function getSortImdb(listTr) {
   const tbody = document.querySelector('tbody');
   let listId = null;
   if (count === 0) {
-    rowElement.children[0].textContent = `${rowElement.children[0].textContent} ${arrowDown}`;
+    rowElement.children[0].textContent = `id ${arrowDown}`;
     listId = listTr.sort((a, b) => a.dataset.id - b.dataset.id);
     count += 1;
   } else if (count === 1) {
     rowElement.children[0].textContent = 'id';
-    rowElement.children[0].textContent = `${rowElement.children[0].textContent} ${arrowUp}`;
+    rowElement.children[0].textContent = `id ${arrowUp}`;
     listId = listTr.sort((a, b) => b.dataset.id - a.dataset.id);
     count += 1;
   } else if (count === 2) {
